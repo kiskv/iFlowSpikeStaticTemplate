@@ -48,6 +48,10 @@ module.exports = options => ({
         use: ['style-loader', 'css-loader'],
       },
       {
+        test: /\.(ttf|eot|woff)$/,
+        use: ['file-loader?name=/[name].[ext]'],
+      },
+      {
         test: /\.(eot|otf|ttf|woff|woff2)$/,
         use: 'file-loader',
       },
