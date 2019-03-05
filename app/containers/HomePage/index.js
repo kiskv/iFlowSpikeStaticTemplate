@@ -11,6 +11,7 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import DataGrid from 'devextreme-react/data-grid';
 import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -19,6 +20,7 @@ export default class HomePage extends React.PureComponent {
     return (
       <h1>
         <FormattedMessage {...messages.header} />
+        <DataGrid dataSource={[{ a: 1 }, { b: 2 }]} />
       </h1>
     );
   }
