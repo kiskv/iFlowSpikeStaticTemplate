@@ -18,6 +18,7 @@ import makeSelectMenu from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { getNavigation } from './actions';
+import { getDrawerMode } from './helper';
 
 /* eslint-disable react/prefer-stateless-function */
 class Menu extends React.Component {
