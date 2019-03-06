@@ -19,10 +19,12 @@ import NavigationHistory from 'components/NavigationHistory/';
 import Menu from 'components/Menu';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import Form from 'containers/Form';
 
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 
+import { Drawer } from 'devextreme-react';
 import GlobalStyle from '../../global-styles';
 
 const Container = styled.div`
@@ -50,6 +52,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       opened: false,
+      formVisible: false,
     };
   }
 
@@ -71,23 +74,28 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Container>
-        <Content>
-          <Header onClick={this.onMenuClick} />
-          <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
-            <NavigationHistory />
-            <Routes>
-              <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Route path="/grid/:gridType" component={GridView} />
-                <Route component={NotFoundPage} />
-              </Switch>
-            </Routes>
-          </Menu>
-          <Footer />
-          <GlobalStyle />
-        </Content>
-      </Container>
+      <Drawer opened={this.state.formVisible} component={Form} openedStateMode="overlap" position="right">
+        <Container>
+          <Content>
+            <Header onClick={this.onMenuClick} />
+            <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
+              <NavigationHistory />
+              <button type="button" onClick={() => this.setState({formVisible: !this.state.formVisible})}>
+                Open Form
+              </button>
+              <Routes>
+                <Switch>
+                  <Route exact path="/" component={HomePage} />
+                  <Route path="/grid/:gridType" component={GridView} />
+                  <Route component={NotFoundPage} />
+                </Switch>
+              </Routes>
+            </Menu>
+            <Footer />
+            <GlobalStyle />
+          </Content>
+        </Container>
+      </Drawer>
     );
   }
 }

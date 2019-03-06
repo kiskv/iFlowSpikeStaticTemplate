@@ -5,18 +5,13 @@
  */
 
 import React from 'react';
-import ToolbarComponent from 'devextreme-react/toolbar';
+import ToolBar from 'devextreme-react/toolbar';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const View = styled.div`
   display: flex;
   align-items: flex-end;
-`;
-
-const ToolBar = styled(ToolbarComponent)`
-  background-color: #4a4a4a;
-  padding: 15px;
   z-index: 2000;
 `;
 
@@ -32,7 +27,7 @@ class Footer extends React.Component {
   render() {
     return (
       <View>
-        <ToolBar items={items} />
+        <ToolBar className="footer" items={items} style={{backgroundColor: '#4a4a4a', padding: 10}} />
       </View>
     );
   }
