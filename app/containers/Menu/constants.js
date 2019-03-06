@@ -4,4 +4,4 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/Menu/DEFAULT_ACTION';
+export const GET_NAVIGATION_LIST = 'GET_NAVIGATION_LIST';

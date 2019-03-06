@@ -17,6 +17,7 @@ import MenuList from 'components/MenuList/index';
 import makeSelectMenu from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { getNavigation } from './actions';
 
 /* eslint-disable react/prefer-stateless-function */
 class Menu extends React.Component {
@@ -54,18 +55,11 @@ class Menu extends React.Component {
   };
 
   getNavigationList = async () => {
-    const response = await fetch(
-      'http://vnext/iflow/robert/nav?_dc=1550754996520',
-    );
-    const result = await response.json();
-    if (result && result.children && result.children.length > 0) {
-      const navigation = result.children;
-      navigation.splice(0, 1);
-      this.setState({
-        navigation,
-        loading: false,
-      });
-    }
+    const navigation = await getNavigation();
+    this.setState({
+      navigation,
+      loading: false
+    });
   };
 
   getComponent = () => (
