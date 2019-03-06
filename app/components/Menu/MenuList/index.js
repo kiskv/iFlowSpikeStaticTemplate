@@ -7,11 +7,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Link from '../MenuLink/index';
+import { Link as LinkComponent } from 'react-router-dom';
+import './styles.css';
 
 const Container = styled.div`
   display: flex;
   flex: 0;
+  flex-direction: column;
 `;
 
 const List = styled.div`
@@ -36,24 +38,70 @@ const MobileContainer = styled.div`
   padding: 10px;
 `;
 
+const TreeLink = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Link = styled(LinkComponent)`
+  margin-left: 10px;
+`;
+
 /* eslint-disable react/prefer-stateless-function */
 class MenuList extends React.Component {
-  renderLinks = () =>
-    this.props.navigation.map((item, index) => (
-      <Link key={index} to={`/grid/${item.viewType}`}>
-        {item.text}
-      </Link>
-    ));
+  constructor(props) {
+    super(props);
+    this.state = {
+      openedTree: null,
+      openedLink: null,
+    };
+  }
+
+  onClick = (index = null, viewType = null) => {
+    if(index !== null) {
+      this.setState({
+        openedTree: index,
+      })
+    } else {
+      this.setState({
+        openedLink: viewType,
+      })
+    }
+  }
+
+  renderLinks = (navigation) =>
+    navigation.map((item, index) => {
+      if (item.children) {
+        return (
+          <TreeLink key={index}>
+            <button type="button" className="menu_link" onClick={this.onClick.bind(this, index)}>
+              <div>{item.text}</div>
+              <div>{'>'}</div>
+            </button>
+            {this.state.openedTree === index && this.renderLinks(item.children)}
+          </TreeLink>
+        );
+      }
+      return (
+        <Link 
+          key={index} 
+          className={this.state.openedLink === item.viewType ? "opened_link" : "menu_link"} 
+          to={`/grid/${item.viewType}`} 
+          onClick={() => this.onClick(null, item.viewType)}>
+          {item.text}
+        </Link>
+      );
+    });
 
   render() {
     if (this.props.type === 'desktop') {
       return (
         <Container>
-          <List>{this.renderLinks()}</List>
+          <List>{this.renderLinks(this.props.navigation)}</List>
         </Container>
       );
     }
-    return <MobileContainer>{this.renderLinks()}</MobileContainer>;
+    return <MobileContainer>{this.renderLinks(this.props.navigation)}</MobileContainer>;
   }
 }
 

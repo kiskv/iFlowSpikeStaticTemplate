@@ -1,4 +1,7 @@
-.menu_link {
+.menu_link, .opened_link {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 15px;
@@ -6,8 +9,15 @@
     border-radius: 5px;
     text-decoration: none;
     color: #4a4a4a;
+    justify-content: space-between;
+    cursor: pointer;
 }
 
 .menu_link:hover {
     background-color: #2c85d338;
+}
+
+.opened_link {
+    background-color: #2c85d3;
+    color: white;
 }
