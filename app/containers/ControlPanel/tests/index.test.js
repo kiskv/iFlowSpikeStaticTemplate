@@ -2,9 +2,9 @@
 // import { mount } from 'enzyme';
 // import { enzymeFind } from 'styled-components/test-utils';
 
-// import NavigationHistory from '../index';
+// import { ControlPanel } from '../index';
 
-describe('<NavigationHistory />', () => {
+describe('<ControlPanel />', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false);
   });

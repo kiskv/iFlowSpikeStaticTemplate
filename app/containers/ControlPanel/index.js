@@ -1,14 +1,24 @@
 /**
  *
- * NavigationHistory
+ * ControlPanel
  *
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import Toolbar from 'devextreme-react/toolbar';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import notify from 'devextreme/ui/notify';
+
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import makeSelectControlPanel from './selectors';
+import reducer from './reducer';
+import saga from './saga';
 
 const View = styled.div`
   margin: 10px;
@@ -78,7 +88,7 @@ const items = [
 ];
 
 /* eslint-disable react/prefer-stateless-function */
-class NavigationHistory extends React.Component {
+class ControlPanel extends React.Component {
   render() {
     return (
       <View>
@@ -88,6 +98,30 @@ class NavigationHistory extends React.Component {
   }
 }
 
-NavigationHistory.propTypes = {};
+ControlPanel.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
 
-export default NavigationHistory;
+const mapStateToProps = createStructuredSelector({
+  controlPanel: makeSelectControlPanel(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'controlPanel', reducer });
+const withSaga = injectSaga({ key: 'controlPanel', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(ControlPanel);

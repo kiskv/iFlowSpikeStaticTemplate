@@ -16,10 +16,10 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GridView from 'containers/GridView/Loadable';
 import Menu from 'containers/Menu/Loadable';
-import NavigationHistory from 'components/NavigationHistory/';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import Form from 'containers/Form';
+import ControlPanel from 'containers/ControlPanel';
 
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
@@ -84,7 +84,7 @@ export default class App extends React.Component {
           <Form onClose={this.setFormVisible} visible={this.state.formVisible}/>
           <Header onClick={this.onMenuClick} />
           <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
-            <NavigationHistory />
+          <ControlPanel />
             <Routes>
               <Switch>
                 <Route exact path="/" component={HomePage} />

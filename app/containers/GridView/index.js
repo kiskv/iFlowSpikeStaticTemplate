@@ -15,12 +15,12 @@ import styled from 'styled-components';
 import DataGrid, {
   Editing,
   HeaderFilter,
-  Column,
   Paging,
   Scrolling,
   FilterRow,
   FilterPanel,
-  ColumnChooser
+  ColumnChooser,
+  Selection
 } from 'devextreme-react/data-grid';
 import ruLocale from 'devextreme/localization/messages/ru.json';
 import { loadMessages, locale } from 'devextreme/localization';
@@ -46,23 +46,17 @@ export class GridView extends React.Component {
     super(props);
     this.state = {
         userType: 0,
-        columnAutoWidth: false
+        columnAutoWidth: false,
+        selected: []
     };
     locale('ru');
     loadMessages(ruLocale);
 }
 
-addNewRow = () => {
-    if (this.state.userType === 0) {
-        this.props.history.push({ pathname: '/add' });
-    }
-}
-
-onEditingStart = (e) => {
-    if (this.state.userType === 0) {
-        const { gridType } = this.props.match.params;
-        this.props.history.push(`/edit/${gridType}/${e.data.LINK}`);
-    }
+onSelectionChanged = (data) => {
+    this.setState({
+        selected: data.selectedRowsData
+    });
 }
 
 render() {
@@ -74,20 +68,28 @@ render() {
                 elementAttr={{
                     id: 'gridContainer'
                 }}
-                dataSource={[{a: 1, b: 2, c: 3, d: 4}, {a: 5, b: 6, c: 7, d: 8}]}
+                dataSource={[
+                    {a: 1, b: 2, c: 3, d: 4}, 
+                    {a: 5, b: 6, c: 7, d: 8}, 
+                    {a: 9, b: 10, c: 11, d: 12}, 
+                    {a: 13, b: 14, c: 15, d: 16}
+                ]}
                 showBorders
                 allowColumnReordering
                 allowColumnResizing
-                onInitNewRow={this.addNewRow}
-                onEditingStart={this.onEditingStart}
-                remoteOperations>
+                remoteOperations
+                onSelectionChanged={this.onSelectionChanged}>
+                <Selection 
+                    mode={'multiple'}
+                    showCheckBoxesMode="onClick"
+                    selectAllMode="allPages" />
                 <Scrolling rowRenderingMode="virtual" />
                 <ColumnChooser enabled />
                 <Paging pageSize={25} />
                 <HeaderFilter visible allowSearch />
                 <FilterRow visible />
                 <Editing
-                    mode={this.state.userType === 0 ? null : 'form'}
+                    mode={'form'}
                     allowAdding
                     allowUpdating
                     allowDeleting
