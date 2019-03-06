@@ -9,3 +9,4 @@ export const getDrawerMode = (drawerMode, currentWidth) => {
   }
   return null;
 };
+  

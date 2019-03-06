@@ -5,11 +5,18 @@
  */
 
 import React from 'react';
-import { Drawer } from 'devextreme-react';
 import PropTypes from 'prop-types';
-import MenuList from './MenuList/index';
-import { getDrawerMode } from './helper';
-// import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+import { Drawer } from 'devextreme-react';
+
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import MenuList from 'components/MenuList/index';
+import makeSelectMenu from './selectors';
+import reducer from './reducer';
+import saga from './saga';
 
 /* eslint-disable react/prefer-stateless-function */
 class Menu extends React.Component {
@@ -91,4 +98,30 @@ Menu.propTypes = {
   onModeChange: PropTypes.func.isRequired,
 };
 
-export default Menu;
+Menu.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  menu: makeSelectMenu(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'menu', reducer });
+const withSaga = injectSaga({ key: 'menu', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(Menu);

@@ -15,8 +15,8 @@ import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GridView from 'containers/GridView/Loadable';
+import Menu from 'containers/Menu/Loadable';
 import NavigationHistory from 'components/NavigationHistory/';
-import Menu from 'components/Menu';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import Form from 'containers/Form';
