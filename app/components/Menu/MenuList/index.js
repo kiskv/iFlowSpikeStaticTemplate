@@ -20,20 +20,24 @@ const List = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  min-width: 290px;
+  margin: 10px;
   background-color: white;
   padding: 10px;
   border: 1px solid #c6c6c6;
-  margin: 10px;
   margin-right: 0px;
 `;
 
 const MobileContainer = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+const MobileList = styled.div`
   display: flex;
   flex: 1;
-  flex-direction: column;
-  min-width: 290px;
+  width: 290px;
   height: 100%;
+  flex-direction: column;
   background-color: white;
   padding: 10px;
 `;
@@ -76,7 +80,7 @@ class MenuList extends React.Component {
           <TreeLink key={index}>
             <button type="button" className="menu_link" onClick={this.onClick.bind(this, index)}>
               <div>{item.text}</div>
-              <div>{'>'}</div>
+              <div style={{paddingLeft: 15}}>{'>'}</div>
             </button>
             {this.state.openedTree === index && this.renderLinks(item.children)}
           </TreeLink>
@@ -101,7 +105,13 @@ class MenuList extends React.Component {
         </Container>
       );
     }
-    return <MobileContainer>{this.renderLinks(this.props.navigation)}</MobileContainer>;
+    return (
+      <MobileContainer>
+        <MobileList>
+          {this.renderLinks(this.props.navigation)}
+        </MobileList>
+      </MobileContainer>
+    );
   }
 }
 

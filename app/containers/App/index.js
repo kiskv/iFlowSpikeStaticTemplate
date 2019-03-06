@@ -72,15 +72,22 @@ export default class App extends React.Component {
     });
   };
 
+  setFormVisible = () => {
+    const { formVisible } = this.state;
+    this.setState({formVisible: !formVisible})
+  }
+
+  getDrawerComponent = () => <Form onClose={this.setFormVisible}/>
+
   render() {
     return (
-      <Drawer opened={this.state.formVisible} component={Form} openedStateMode="overlap" position="right">
+      <Drawer opened={this.state.formVisible} component={this.getDrawerComponent} openedStateMode="overlap" position="right">
         <Container>
           <Content>
             <Header onClick={this.onMenuClick} />
             <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
               <NavigationHistory />
-              <button type="button" onClick={() => this.setState({formVisible: !this.state.formVisible})}>
+              <button type="button" onClick={this.setFormVisible}>
                 Open Form
               </button>
               <Routes>
