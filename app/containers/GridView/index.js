@@ -32,6 +32,8 @@ import makeSelectGridView from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
+import { setSelectedItems } from './actions';
+
 const Container = styled.div`
     display: flex;
     flex: 1;
@@ -54,9 +56,7 @@ export class GridView extends React.Component {
 }
 
 onSelectionChanged = (data) => {
-    this.setState({
-        selected: data.selectedRowsData
-    });
+  this.props.setSelectedItems(data.selectedRowsData);
 }
 
 render() {
@@ -102,29 +102,25 @@ render() {
 }
 
 GridView.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  setSelectedItems: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  gridView: makeSelectGridView(),
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+  setSelectedItems: selected => dispatch(setSelectedItems(selected))
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-const withConnect = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-);
-
-const withReducer = injectReducer({ key: 'gridView', reducer });
-const withSaga = injectSaga({ key: 'gridView', saga });
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
 )(GridView);
+
+// const withReducer = injectReducer({ key: 'gridView', reducer });
+// const withSaga = injectSaga({ key: 'gridView', saga });
+
+// export default compose(
+//   withReducer,
+//   withSaga,
+//   withConnect,
+// )(GridView);

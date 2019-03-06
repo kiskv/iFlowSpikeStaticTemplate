@@ -7,6 +7,8 @@ import { connectRouter } from 'connected-react-router/immutable';
 
 import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
+import grid from 'containers/GridView/reducer';
+import cpanel from 'containers/ControlPanel/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -14,6 +16,8 @@ import languageProviderReducer from 'containers/LanguageProvider/reducer';
 export default function createReducer(injectedReducers = {}) {
   const rootReducer = combineReducers({
     language: languageProviderReducer,
+    grid,
+    cpanel,
     ...injectedReducers,
   });
 

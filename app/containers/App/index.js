@@ -83,8 +83,8 @@ export default class App extends React.Component {
         <Content>
           <Form onClose={this.setFormVisible} visible={this.state.formVisible}/>
           <Header onClick={this.onMenuClick} />
-          <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
           <ControlPanel />
+          <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
             <Routes>
               <Switch>
                 <Route exact path="/" component={HomePage} />

@@ -13,6 +13,7 @@ import Toolbar from 'devextreme-react/toolbar';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import notify from 'devextreme/ui/notify';
+import { withRouter } from 'react-router-dom'
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -89,10 +90,29 @@ const items = [
 
 /* eslint-disable react/prefer-stateless-function */
 class ControlPanel extends React.Component {
+  constructor(props){
+    super(props);
+    this.items = [
+      {
+        location: 'after',
+        widget: 'dxButton',
+        locateInMenu: 'auto',
+        options: {
+          icon: 'plus',
+          onClick: this.addNewRow,
+        },
+      }
+    ];
+  }
+
+  addNewRow = () => {
+    this.props.history.push('/edit');
+  }
+
   render() {
     return (
       <View>
-        <Toolbar items={items} style={{ backgroundColor: 'transparent' }} />
+        <Toolbar items={this.items} style={{ backgroundColor: 'transparent' }} />
       </View>
     );
   }
@@ -102,15 +122,15 @@ ControlPanel.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  controlPanel: makeSelectControlPanel(),
-});
-
-function mapDispatchToProps(dispatch) {
+const mapStateToProps = state => {
   return {
-    dispatch,
-  };
-}
+    selected: state.get('grid').selected
+  }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatch
+});
 
 const withConnect = connect(
   mapStateToProps,
@@ -120,8 +140,8 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'controlPanel', reducer });
 const withSaga = injectSaga({ key: 'controlPanel', saga });
 
-export default compose(
+export default withRouter(compose(
   withReducer,
   withSaga,
   withConnect,
-)(ControlPanel);
+)(ControlPanel));
