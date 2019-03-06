@@ -77,32 +77,29 @@ export default class App extends React.Component {
     this.setState({formVisible: !formVisible})
   }
 
-  getDrawerComponent = () => <Form onClose={this.setFormVisible}/>
-
   render() {
     return (
-      <Drawer opened={this.state.formVisible} component={this.getDrawerComponent} openedStateMode="overlap" position="right">
-        <Container>
-          <Content>
-            <Header onClick={this.onMenuClick} />
-            <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
-              <NavigationHistory />
-              <button type="button" onClick={this.setFormVisible}>
+      <Container>
+        <Content>
+          <Form onClose={this.setFormVisible} visible={this.state.formVisible}/>
+          <Header onClick={this.onMenuClick} />
+          <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
+            <NavigationHistory />
+            <button type="button" onClick={this.setFormVisible}>
                 Open Form
-              </button>
-              <Routes>
-                <Switch>
-                  <Route exact path="/" component={HomePage} />
-                  <Route path="/grid/:gridType" component={GridView} />
-                  <Route component={NotFoundPage} />
-                </Switch>
-              </Routes>
-            </Menu>
-            <Footer />
-            <GlobalStyle />
-          </Content>
-        </Container>
-      </Drawer>
+            </button>
+            <Routes>
+              <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Route path="/grid/:gridType" component={GridView} />
+                <Route component={NotFoundPage} />
+              </Switch>
+            </Routes>
+          </Menu>
+          <Footer />
+          <GlobalStyle />
+        </Content>
+      </Container>
     );
   }
 }
