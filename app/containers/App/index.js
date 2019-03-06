@@ -13,11 +13,13 @@ import styled from 'styled-components';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+
 import GridView from 'containers/GridView/Loadable';
 import NavigationHistory from 'components/NavigationHistory/';
 import Menu from 'components/Menu';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 
@@ -89,3 +91,4 @@ export default class App extends React.Component {
     );
   }
 }
+
