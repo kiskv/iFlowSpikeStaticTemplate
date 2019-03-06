@@ -25,69 +25,6 @@ const View = styled.div`
   margin: 10px;
 `;
 
-const items = [
-  {
-    location: 'before',
-    widget: 'dxButton',
-    options: {
-      type: 'back',
-      text: 'Back',
-      onClick: () => {
-        notify('Back button has been clicked!');
-      },
-    },
-  },
-  {
-    location: 'before',
-    widget: 'dxButton',
-    locateInMenu: 'auto',
-    options: {
-      icon: 'refresh',
-      onClick: () => {
-        notify('Refresh button has been clicked!');
-      },
-    },
-  },
-  {
-    location: 'center',
-    locateInMenu: 'never',
-    template: () =>
-      "<div class='toolbar-label'><b>Tom's Club</b> Products</div>",
-  },
-  {
-    location: 'after',
-    widget: 'dxButton',
-    locateInMenu: 'auto',
-    options: {
-      icon: 'plus',
-      onClick: () => {
-        notify('Add button has been clicked!');
-      },
-    },
-  },
-  {
-    locateInMenu: 'always',
-    text: 'Save',
-    onClick: () => {
-      notify('Save option has been clicked!');
-    },
-  },
-  {
-    locateInMenu: 'always',
-    text: 'Print',
-    onClick: () => {
-      notify('Print option has been clicked!');
-    },
-  },
-  {
-    locateInMenu: 'always',
-    text: 'Settings',
-    onClick: () => {
-      notify('Settings option has been clicked!');
-    },
-  },
-];
-
 /* eslint-disable react/prefer-stateless-function */
 class ControlPanel extends React.Component {
   constructor(props){
@@ -98,11 +35,42 @@ class ControlPanel extends React.Component {
         widget: 'dxButton',
         locateInMenu: 'auto',
         options: {
+          icon: 'close',
+          onClick: this.onDeletePress,
+        },
+      },
+      {
+        location: 'after',
+        widget: 'dxButton',
+        locateInMenu: 'auto',
+        options: {
+          icon: 'edit',
+          onClick: this.addNewRow,
+        },
+      },
+      {
+        location: 'after',
+        widget: 'dxButton',
+        locateInMenu: 'auto',
+        options: {
           icon: 'plus',
           onClick: this.addNewRow,
         },
+      },
+      {
+        location: 'after',
+        widget: 'dxButton',
+        locateInMenu: 'auto',
+        options: {
+          icon: 'refresh',
+          onClick: () => notify('Refresh'),
+        },
       }
     ];
+  }
+
+  onDeletePress = () => {
+    notify(JSON.stringify(this.props.selected));
   }
 
   addNewRow = () => {

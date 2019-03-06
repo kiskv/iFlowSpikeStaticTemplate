@@ -25,8 +25,6 @@ class Menu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      navigation: [],
-      loading: true,
       drawerMode: document.body.offsetWidth > 1100 ? 'shrink' : 'overlap',
       currentWidth: document.body.offsetWidth,
     };
@@ -56,22 +54,18 @@ class Menu extends React.Component {
   };
 
   getNavigationList = async () => {
-    const navigation = await getNavigation();
-    this.setState({
-      navigation,
-      loading: false
-    });
+    await this.props.getNavigation();
   };
 
   getComponent = () => (
     <MenuList
-      navigation={this.state.navigation}
+      navigation={this.props.navigation}
       type={this.state.drawerMode === 'shrink' ? 'desktop' : 'mobile'}
     />
   );
 
   render() {
-    if (this.state.loading) {
+    if (this.props.loading) {
       return <div>Loading...</div>;
     }
     return (
@@ -91,21 +85,19 @@ Menu.propTypes = {
   opened: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.any]).isRequired,
   onModeChange: PropTypes.func.isRequired,
+  navigation: PropTypes.arrayOf(PropTypes.any).isRequired,
+  getNavigation: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
-Menu.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = createStructuredSelector({
-  menu: makeSelectMenu(),
+const mapStateToProps = (state) => ({
+  navigation: state.get('menu').navigation,
+  loading: state.get('menu').loading
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
+const mapDispatchToProps = (dispatch) => ({
+  getNavigation: () => dispatch(getNavigation())
+});
 
 const withConnect = connect(
   mapStateToProps,

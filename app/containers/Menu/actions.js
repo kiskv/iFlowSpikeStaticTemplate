@@ -4,16 +4,27 @@
  *
  */
 
-import { GET_NAVIGATION_LIST } from './constants';
+import { GET_NAVIGATION_LIST, REQUEST_NAVIGATION_LIST, GET_NAVIGATION_LIST_ERROR, SET_LOADING } from './constants';
 
-export const getNavigation = async () => {
-  const response = await fetch(
-    'http://vnext/iflow/robert/nav?_dc=1550754996520',
-  );
-  const result = await response.json();
-  if (result && result.children && result.children.length > 0) {
-    const navigation = result.children;
-    navigation.splice(0, 1);
-    return navigation;
+export const reqNavigationList = () => ({
+  type: REQUEST_NAVIGATION_LIST
+});
+
+export const navError = error => {
+  return {
+    type: GET_NAVIGATION_LIST_ERROR,
+    error
   }
-}
+};
+
+export const getNavigation = (navigation) => {
+  return {
+    type: GET_NAVIGATION_LIST,
+    navigation
+  }
+};
+
+export const setLoading = (loading) => ({
+  type: SET_LOADING,
+  loading
+});

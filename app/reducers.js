@@ -9,6 +9,7 @@ import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import grid from 'containers/GridView/reducer';
 import cpanel from 'containers/ControlPanel/reducer';
+import menu from 'containers/Menu/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -18,6 +19,7 @@ export default function createReducer(injectedReducers = {}) {
     language: languageProviderReducer,
     grid,
     cpanel,
+    menu,
     ...injectedReducers,
   });
 

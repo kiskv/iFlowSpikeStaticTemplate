@@ -24,7 +24,6 @@ import ControlPanel from 'containers/ControlPanel';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 
-import { Drawer } from 'devextreme-react';
 import GlobalStyle from '../../global-styles';
 
 const Container = styled.div`
@@ -83,8 +82,8 @@ export default class App extends React.Component {
         <Content>
           <Form onClose={this.setFormVisible} visible={this.state.formVisible}/>
           <Header onClick={this.onMenuClick} />
-          <ControlPanel />
           <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
+            <ControlPanel />
             <Routes>
               <Switch>
                 <Route exact path="/" component={HomePage} />
