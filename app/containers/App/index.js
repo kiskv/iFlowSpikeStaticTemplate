@@ -85,9 +85,6 @@ export default class App extends React.Component {
           <Header onClick={this.onMenuClick} />
           <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
             <NavigationHistory />
-            <button type="button" onClick={this.setFormVisible}>
-                Open Form
-            </button>
             <Routes>
               <Switch>
                 <Route exact path="/" component={HomePage} />
