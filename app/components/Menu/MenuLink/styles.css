@@ -1,0 +1,13 @@
+.menu_link {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #4a4a4a;
+}
+
+.menu_link:hover {
+    background-color: #2c85d338;
+}
