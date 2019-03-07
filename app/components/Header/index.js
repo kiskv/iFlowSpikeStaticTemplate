@@ -19,6 +19,7 @@ const View = styled.div`
 class Header extends React.Component {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
+    onHomeClick : PropTypes.func.isRequired,
   };
 
   helpMenuItems = [
@@ -71,7 +72,7 @@ class Header extends React.Component {
           activeStateEnabled : false,
           focusStateEnabled : false,
           hoverStateEnabled : false,
-          onClick: props.onClick,
+          onClick: props.onHomeClick,
           stylingMode : 'text',
         },
       },
@@ -79,12 +80,11 @@ class Header extends React.Component {
         cssClass : "textAsBtn",
         location: 'before',
         text: "IFLOW APP",
-        onClick : props.onClick,
+        onClick: props.onHomeClick,
       },
       {
         location: 'center',
         text: "ЧЭСК КОНФИГУРАЦИЯ ФЛ",
-        onClick : props.onClick,
       },
       {
         location : 'after',
