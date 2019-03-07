@@ -7,7 +7,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,9 +14,9 @@ import { Form as DevExpressForm } from 'devextreme-react/form';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectForm from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import {setVisibleForm} from './actions';
 
 const View = styled.div`
   display: flex;
@@ -127,11 +126,15 @@ const formItems = [{
 
 /* eslint-disable react/prefer-stateless-function */
 export class Form extends React.Component {
+  onClick = () => {
+    this.props.setVisibleForm(false);
+  }
+
   render() {
     return (
       <Drawer anchor="right" open={this.props.visible}>
         <View>
-          <button type="button" onClick={this.props.onClose}>Close</button>
+          <button type="button" onClick={this.onClick}>Close</button>
           <DevExpressForm formData={employee} items={formItems} />
         </View>
       </Drawer>
@@ -140,19 +143,17 @@ export class Form extends React.Component {
 }
 
 Form.propTypes = {
-  onClose: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
+  setVisibleForm: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  form: makeSelectForm(),
-});
+const mapStateToProps = state => ({
+  visible: state.get('form').visible,
+})
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
+const mapDispatchToProps = (dispatch) => ({
+  setVisibleForm: (visible) => dispatch(setVisibleForm(visible)), 
+})
 
 const withConnect = connect(
   mapStateToProps,

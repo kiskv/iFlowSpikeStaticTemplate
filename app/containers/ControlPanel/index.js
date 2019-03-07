@@ -13,6 +13,7 @@ import Toolbar from 'devextreme-react/toolbar';
 import styled from 'styled-components';
 import notify from 'devextreme/ui/notify';
 import { withRouter } from 'react-router-dom'
+import { setVisibleForm } from 'containers/Form/actions';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -25,60 +26,41 @@ const View = styled.div`
 
 /* eslint-disable react/prefer-stateless-function */
 class ControlPanel extends React.Component {
-  constructor(props){
-    super(props);
-    this.items = [
-      {
-        location: 'after',
-        widget: 'dxButton',
-        locateInMenu: 'auto',
-        options: {
-          icon: 'close',
-          onClick: this.onDeletePress,
-        },
-      },
-      {
-        location: 'after',
-        widget: 'dxButton',
-        locateInMenu: 'auto',
-        options: {
-          icon: 'edit',
-          onClick: this.addNewRow,
-        },
-      },
-      {
-        location: 'after',
-        widget: 'dxButton',
-        locateInMenu: 'auto',
-        options: {
-          icon: 'plus',
-          onClick: this.addNewRow,
-        },
-      },
-      {
-        location: 'after',
-        widget: 'dxButton',
-        locateInMenu: 'auto',
-        options: {
-          icon: 'refresh',
-          onClick: () => notify('Refresh'),
-        },
-      },
-    ];
-  }
-
   onDeletePress = () => {
     notify(JSON.stringify(this.props.selected));
   }
 
+  onRefresh = () => {
+    notify("Refresh");
+  }
+
   addNewRow = () => {
-    this.props.history.push(`/edit/new`);
+    this.props.history.push({
+      pathname: `/edit/${this.props.viewId}`,
+      state: {
+        newrow: true,
+      },
+    });
+  }
+
+  editRow = () => {
+    if(this.props.selected.length > 1) {
+      notify('Не более одного.');
+    } else if (this.props.selected.length === 0) {
+      notify('Выберите строку.')
+    } else {
+      this.props.history.push(`/edit/${this.props.viewId}`);
+    }
+  }
+
+  showForm = () => {
+    this.props.setVisibleForm(true);
   }
 
   render() {
     return (
       <View>
-        <Toolbar items={this.items} style={{ backgroundColor: 'transparent' }} />
+        <Toolbar items={this.props.items(this)} style={{ backgroundColor: 'transparent' }} />
       </View>
     );
   }
@@ -89,14 +71,23 @@ ControlPanel.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   selected: PropTypes.arrayOf(PropTypes.any).isRequired,
+  viewId: PropTypes.string.isRequired,
+  items: PropTypes.func,
+  setVisibleForm: PropTypes.func.isRequired,
 };
+
+ControlPanel.defaultProps = {
+  items: () => [],
+}
 
 const mapStateToProps = state => ({
   selected: state.get('grid').selected,
+  viewId: state.get('menu').viewId,
+  items: state.get('cpanel').items,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatch,
+  setVisibleForm: visible => dispatch(setVisibleForm(visible)),
 });
 
 const withConnect = connect(

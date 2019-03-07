@@ -4,10 +4,9 @@
  *
  */
 
-import { DEFAULT_ACTION } from './constants';
+import { SET_VISIBLE_FORM } from './constants';
 
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
-}
+export const setVisibleForm = (visible) => ({
+  type: SET_VISIBLE_FORM,
+  visible,
+})

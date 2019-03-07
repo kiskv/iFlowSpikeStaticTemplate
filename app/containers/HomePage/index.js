@@ -15,6 +15,10 @@ import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.Component {
+  componentDidMount(){
+    this.props.history.push('/grid/pe_rd_debtors_listview');
+  }
+
   render() {
     return (
       <h1>

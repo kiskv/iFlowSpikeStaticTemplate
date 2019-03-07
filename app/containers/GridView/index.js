@@ -7,9 +7,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import styled from 'styled-components';
 
 import DataGrid, {
@@ -20,19 +17,16 @@ import DataGrid, {
   FilterRow,
   FilterPanel,
   ColumnChooser,
-  Selection
+  Selection,
 } from 'devextreme-react/data-grid';
 import ruLocale from 'devextreme/localization/messages/ru.json';
 import { loadMessages, locale } from 'devextreme/localization';
 import 'devextreme-intl';
-
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import makeSelectGridView from './selectors';
-import reducer from './reducer';
-import saga from './saga';
+import DataSource from 'utils/modules/Store';
+import { setToolbarItems } from 'containers/ControlPanel/actions';
 
 import { setSelectedItems } from './actions';
+import { setCurrentViewId } from '../Menu/actions';
 
 const Container = styled.div`
     display: flex;
@@ -46,69 +40,76 @@ const Container = styled.div`
 export class GridView extends React.Component {
   constructor(props) {
     super(props);
+    this.dataSource = DataSource;
     this.state = {
-        userType: 0,
-        columnAutoWidth: false,
-        selected: []
+      columnAutoWidth: false,
     };
     locale('ru');
     loadMessages(ruLocale);
-}
+  }
+  
+  componentDidMount() {
+    this.props.setToolbarItems('grid');
+    this.props.setCurrentViewId(this.props.match.params.gridType);
+  }
 
-onSelectionChanged = (data) => {
-  this.props.setSelectedItems(data.selectedRowsData);
-}
+  onSelectionChanged = (data) => {
+    this.props.setSelectedItems(data.selectedRowsData);
+  }
 
-render() {
+  render() {
+    const select = 'LINK,N_Code,C_Name1,C_Name2,C_Name3,C_Address1,N_Debit1_WO_Peni,N_Debit1_Peni,N_Debit1,N_DebtPeriods1,N_OverDuePeriods1,D_Date_Due,D_Date_LastDue';
     return (
-        <Container>
-            <DataGrid
-                columnAutoWidth={this.state.columnAutoWidth}
-                cacheEnabled
-                elementAttr={{
-                    id: 'gridContainer'
-                }}
-                dataSource={[
-                    {a: 1, b: 2, c: 3, d: 4}, 
-                    {a: 5, b: 6, c: 7, d: 8}, 
-                    {a: 9, b: 10, c: 11, d: 12}, 
-                    {a: 13, b: 14, c: 15, d: 16}
-                ]}
-                showBorders
-                allowColumnReordering
-                allowColumnResizing
-                remoteOperations
-                onSelectionChanged={this.onSelectionChanged}>
-                <Selection 
-                    mode={'multiple'}
-                    showCheckBoxesMode="onClick"
-                    selectAllMode="allPages" />
-                <Scrolling rowRenderingMode="virtual" />
-                <ColumnChooser enabled />
-                <Paging pageSize={25} />
-                <HeaderFilter visible allowSearch />
-                <FilterRow visible />
-                <Editing
-                    mode={'form'}
-                    allowAdding
-                    allowUpdating
-                    allowDeleting
-                    useIcons />
-                <FilterPanel visible />
-            </DataGrid>
-        </Container>
+      <Container>
+        <DataGrid
+          columnAutoWidth={this.state.columnAutoWidth}
+          cacheEnabled
+          elementAttr={{
+            id: 'gridContainer',
+          }}
+          dataSource={this.dataSource({ viewId: this.props.match.params.gridType, action: 'pe_rd_debtors', select })}
+          showBorders
+          allowColumnReordering
+          allowColumnResizing
+          remoteOperations
+          onSelectionChanged={this.onSelectionChanged}>
+          <Selection 
+            mode="multiple"
+            showCheckBoxesMode="onClick"
+            selectAllMode="allPages" />
+          <Scrolling rowRenderingMode="virtual" mode="virtual" />
+          <ColumnChooser enabled />
+          <Paging pageSize={25} />
+          <HeaderFilter visible allowSearch />
+          <FilterRow visible />
+          <Editing
+            mode="form"
+            allowAdding
+            allowUpdating
+            allowDeleting
+            useIcons />
+          <FilterPanel visible />
+        </DataGrid>
+      </Container>
     );
-}
+  }
 }
 
 GridView.propTypes = {
   setSelectedItems: PropTypes.func.isRequired,
+  setCurrentViewId: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.objectOf(PropTypes.any),
+  }).isRequired,
+  setToolbarItems: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  setSelectedItems: selected => dispatch(setSelectedItems(selected))
+  setSelectedItems: selected => dispatch(setSelectedItems(selected)),
+  setCurrentViewId: viewId => dispatch(setCurrentViewId(viewId)),
+  setToolbarItems: path => dispatch(setToolbarItems(path)),
 });
 
 export default connect(

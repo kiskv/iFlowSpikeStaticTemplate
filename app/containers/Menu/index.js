@@ -15,7 +15,7 @@ import injectReducer from 'utils/injectReducer';
 import MenuList from 'components/MenuList/index';
 import reducer from './reducer';
 import saga from './saga';
-import { getNavigation } from './actions';
+import { getNavigation, setCurrentViewId } from './actions';
 import { getDrawerMode } from './helper';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -59,6 +59,7 @@ class Menu extends React.Component {
     <MenuList
       navigation={this.props.navigation}
       type={this.state.drawerMode === 'shrink' ? 'desktop' : 'mobile'}
+      onClick={this.props.setCurrentViewId}
     />
   );
 
@@ -86,6 +87,7 @@ Menu.propTypes = {
   navigation: PropTypes.arrayOf(PropTypes.any).isRequired,
   getNavigation: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  setCurrentViewId: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -95,6 +97,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getNavigation: () => dispatch(getNavigation()),
+  setCurrentViewId: viewId => dispatch(setCurrentViewId(viewId)),
 });
 
 const withConnect = connect(

@@ -5,14 +5,17 @@
  */
 
 import { fromJS } from 'immutable';
-import { DEFAULT_ACTION } from './constants';
+import { SET_TOOLBAR_ITEMS } from './constants';
 
 export const initialState = fromJS({});
 
 function controlPanelReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case SET_TOOLBAR_ITEMS:
+      return {
+        ...state,
+        items: action.items,
+      };
     default:
       return state;
   }
