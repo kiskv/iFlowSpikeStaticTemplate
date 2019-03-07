@@ -15,7 +15,7 @@ import injectReducer from 'utils/injectReducer';
 import MenuList from 'components/MenuList/index';
 import reducer from './reducer';
 import saga from './saga';
-import { getNavigation, setCurrentViewId } from './actions';
+import { getNavigation, setCurrentViewId, setOpenedType } from './actions';
 import { getDrawerMode } from './helper';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -40,11 +40,10 @@ class Menu extends React.Component {
     );
     if (drawerMode) {
       if (drawerMode === 'overlap') {
-        this.props.onModeChange(false).then(res => {
-          if (res) {
+        this.props.setOpenedType(false)
+          .then(() => {
             this.setState({ drawerMode });
-          }
-        });
+          })
       } else {
         this.setState({ drawerMode });
       }
@@ -83,7 +82,7 @@ class Menu extends React.Component {
 Menu.propTypes = {
   opened: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.any]).isRequired,
-  onModeChange: PropTypes.func.isRequired,
+  setOpenedType: PropTypes.func.isRequired,
   navigation: PropTypes.arrayOf(PropTypes.any).isRequired,
   getNavigation: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
@@ -93,11 +92,13 @@ Menu.propTypes = {
 const mapStateToProps = (state) => ({
   navigation: state.get('menu').navigation,
   loading: state.get('menu').loading,
+  opened: state.get('menu').opened,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getNavigation: () => dispatch(getNavigation()),
   setCurrentViewId: viewId => dispatch(setCurrentViewId(viewId)),
+  setOpenedType: visible => dispatch(setOpenedType(visible)),
 });
 
 const withConnect = connect(

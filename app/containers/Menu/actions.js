@@ -4,7 +4,7 @@
  *
  */
 
-import { GET_NAVIGATION_LIST, REQUEST_NAVIGATION_LIST, GET_NAVIGATION_LIST_ERROR, SET_LOADING, SET_CURRENT_VIEW_ID, SET_DEFAULT_PAGE } from './constants';
+import { GET_NAVIGATION_LIST, REQUEST_NAVIGATION_LIST, GET_NAVIGATION_LIST_ERROR, SET_LOADING, SET_CURRENT_VIEW_ID, SET_DEFAULT_PAGE, SET_OPENED_TYPE_MENU } from './constants';
 
 export const reqNavigationList = () => ({
   type: REQUEST_NAVIGATION_LIST,
@@ -33,4 +33,9 @@ export const setCurrentViewId = (viewId) => ({
 export const setDefaultPage = (defaultPage) => ({
   type: SET_DEFAULT_PAGE,
   defaultPage,
+});
+
+export const setOpenedType = (opened) => ({
+  type: SET_OPENED_TYPE_MENU,
+  opened,
 });

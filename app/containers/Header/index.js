@@ -5,9 +5,17 @@
  */
 
 import React from 'react';
-import { Toolbar } from 'devextreme-react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+import { Toolbar } from 'devextreme-react';
 import styled from 'styled-components';
+
+import injectReducer from 'utils/injectReducer';
+import makeSelectHeader from './selectors';
+import reducer from './reducer';
+import { setOpenedType } from '../Menu/actions';
 
 const View = styled.div`
   background-color: white;
@@ -17,11 +25,6 @@ const View = styled.div`
 
 /* eslint-disable react/prefer-stateless-function */
 class Header extends React.Component {
-  static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    onHomeClick : PropTypes.func.isRequired,
-  };
-
   helpMenuItems = [
     {
       icon : 'help',
@@ -61,7 +64,7 @@ class Header extends React.Component {
         location: 'before',
         options: {
           icon: 'menu',
-          onClick: props.onClick,
+          onClick: this.onMenuClick,
         },
       },
       {
@@ -117,6 +120,10 @@ class Header extends React.Component {
     ];
   }
 
+  onMenuClick = () => {
+    this.props.setOpenedType(!this.props.opened)
+  }
+
   render() {
     return (
       <View>
@@ -127,7 +134,20 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onHomeClick: PropTypes.func.isRequired,
+  setOpenedType: PropTypes.func.isRequired,
+  opened: PropTypes.bool.isRequired,
 };
 
-export default Header;
+const mapStateToProps = state => ({
+  opened: state.get('menu').opened,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  setOpenedType: visible => dispatch(setOpenedType(visible)),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Header);

@@ -23,7 +23,7 @@ import NotFoundPage from '../NotFoundPage/Loadable';
 
 import GridView from '../GridView/Loadable';
 import Menu from '../Menu/Loadable';
-import Header from '../../components/Header';
+import Header from '../Header';
 
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
@@ -50,30 +50,6 @@ const Routes = styled.div`
 `;
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      opened: false,
-      formVisible: false,
-    };
-  }
-
-  onModeChange = opened =>
-    new Promise(resolve => {
-      this.setState({ opened }, () => {
-        setTimeout(() => {
-          resolve(true);
-        }, 500);
-      });
-    });
-
-  onMenuClick = () => {
-    const { opened } = this.state;
-    this.setState({
-      opened: !opened,
-    });
-  };
-
   moveToDefaultPage = () => {
     this.props.history.push(`/grid/${this.props.defaultPage}`);
   } 
@@ -82,9 +58,9 @@ class App extends React.Component {
     return (
       <Container>
         <Content>
-          <Form onClose={this.setFormVisible} visible={this.state.formVisible}/>
-          <Header onClick={this.onMenuClick} onHomeClick={this.moveToDefaultPage} />
-          <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
+          <Form />
+          <Header onHomeClick={this.moveToDefaultPage} />
+          <Menu>
             <ControlPanel />
             <Routes>
               <Switch>
