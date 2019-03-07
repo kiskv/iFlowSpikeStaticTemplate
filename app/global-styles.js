@@ -26,6 +26,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: Georgia, Times, 'Times New Roman', serif;
     line-height: 1.5em;
   }
+
+  #gridContainer {
+    height: calc(100vh - 195px);
+  }
 `;
 
 export default GlobalStyle;
