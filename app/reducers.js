@@ -10,6 +10,7 @@ import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import grid from 'containers/GridView/reducer';
 import cpanel from 'containers/ControlPanel/reducer';
 import menu from 'containers/Menu/reducer';
+import form from 'containers/Form/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -20,6 +21,7 @@ export default function createReducer(injectedReducers = {}) {
     grid,
     cpanel,
     menu,
+    form,
     ...injectedReducers,
   });
 

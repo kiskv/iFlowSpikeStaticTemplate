@@ -5,14 +5,17 @@
  */
 
 import { fromJS } from 'immutable';
-import { DEFAULT_ACTION } from './constants';
+import { SET_VISIBLE_FORM } from './constants';
 
 export const initialState = fromJS({});
 
 function formReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case SET_VISIBLE_FORM:
+      return {
+        ...state,
+        visible: action.visible,
+      };
     default:
       return state;
   }

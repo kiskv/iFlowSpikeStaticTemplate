@@ -4,4 +4,4 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/Form/DEFAULT_ACTION';
+export const SET_VISIBLE_FORM = 'app/Form/SET_VISIBLE_FORM';

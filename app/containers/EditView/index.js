@@ -16,6 +16,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Proxy from 'utils/modules/DirectProxy';
 import { ruColumns } from 'utils/modules/Store';
+import { setVisibleForm } from 'containers/Form/actions';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -132,6 +133,10 @@ export class EditView extends React.Component {
     }
   }
 
+  onClick = () => {
+    this.props.setVisibleForm(true);
+  }
+
   render() {
     return (
       <Container>
@@ -140,6 +145,7 @@ export class EditView extends React.Component {
           <meta name="description" content="Description of EditView" />
         </Helmet>
         <h3>{this.props.location.state ? 'Добавление новой строки' : `Редактирование по LINK: ${this.props.selected.length > 1 ? this.props.selected[0].LINK : ''}`}</h3>
+        <button type="button" onClick={this.onClick}><h3>Open drawer Form</h3></button>
         <Form formData={this.state.data} items={this.state.formItems} scrollingEnabled />
       </Container>
     );
@@ -155,17 +161,16 @@ EditView.propTypes = {
     params: PropTypes.object.isRequired,
   }).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
+  setVisibleForm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   selected: state.get('grid').selected,
 })
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
+const mapDispatchToProps = (dispatch) => ({
+  setVisibleForm: visible => dispatch(setVisibleForm(visible)),
+})
 
 const withConnect = connect(
   mapStateToProps,

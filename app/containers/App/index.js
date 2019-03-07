@@ -51,7 +51,6 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       opened: false,
-      formVisible: false,
     };
   }
 
@@ -71,16 +70,11 @@ export default class App extends React.Component {
     });
   };
 
-  setFormVisible = () => {
-    const { formVisible } = this.state;
-    this.setState({formVisible: !formVisible})
-  }
-
   render() {
     return (
       <Container>
         <Content>
-          <Form onClose={this.setFormVisible} visible={this.state.formVisible}/>
+          <Form />
           <Header onClick={this.onMenuClick} />
           <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
             <ControlPanel />
