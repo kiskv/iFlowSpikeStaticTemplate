@@ -30,6 +30,16 @@ const GlobalStyle = createGlobalStyle`
   #gridContainer {
     height: calc(100vh - 195px);
   }
+  
+  .textAsBtn {
+    border: none;
+    background-color: inherit;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+}
+
 `;
 
 export default GlobalStyle;

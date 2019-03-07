@@ -33,8 +33,41 @@ class Header extends React.Component {
         },
       },
       {
-        location: 'after',
-        template: () => '<div>322</div>',
+        widget: 'dxButton',
+        location: 'before',
+        options: {
+          icon: 'home',
+          activeStateEnabled : false,
+          focusStateEnabled : false,
+          hoverStateEnabled : false,
+          onClick: props.onClick,
+          stylingMode : 'text',
+        },
+      },
+      {
+        cssClass : "textAsBtn",
+        location: 'before',
+        text: "IFLOW APP",
+        onClick : props.onClick,
+      },
+      {
+        location: 'center',
+        text: "ЧЭСК КОНФИГУРАЦИЯ ФЛ",
+        onClick : props.onClick,
+      },
+      {
+        location : 'after',
+        widget : 'dxButton',
+        options: {
+          icon: 'event',
+        },
+      },
+      {
+        location : 'after',
+        widget : 'dxMenu',
+        options: {
+          icon: 'bookmark',
+        },
       },
     ];
   }
@@ -42,7 +75,7 @@ class Header extends React.Component {
   render() {
     return (
       <View>
-        <Toolbar items={this.toolbarItems} />
+        <Toolbar dataSource={this.toolbarItems} />
       </View>
     );
   }
