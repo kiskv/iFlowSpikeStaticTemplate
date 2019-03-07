@@ -20,6 +20,7 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 import Form from 'containers/Form';
 import ControlPanel from 'containers/ControlPanel';
+import EditView from 'containers/EditView/Loadable';
 
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
@@ -88,6 +89,7 @@ export default class App extends React.Component {
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route path="/grid/:gridType" component={GridView} />
+                <Route path="/edit/:gridType" component={EditView} />
                 <Route component={NotFoundPage} />
               </Switch>
             </Routes>

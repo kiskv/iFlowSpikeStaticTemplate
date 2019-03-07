@@ -7,7 +7,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import Toolbar from 'devextreme-react/toolbar';
 // import PropTypes from 'prop-types';
@@ -17,7 +16,6 @@ import { withRouter } from 'react-router-dom'
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectControlPanel from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -65,7 +63,7 @@ class ControlPanel extends React.Component {
           icon: 'refresh',
           onClick: () => notify('Refresh'),
         },
-      }
+      },
     ];
   }
 
@@ -74,7 +72,7 @@ class ControlPanel extends React.Component {
   }
 
   addNewRow = () => {
-    this.props.history.push('/edit');
+    this.props.history.push(`/edit/new`);
   }
 
   render() {
@@ -87,17 +85,18 @@ class ControlPanel extends React.Component {
 }
 
 ControlPanel.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  selected: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = state => {
-  return {
-    selected: state.get('grid').selected
-  }
-};
+const mapStateToProps = state => ({
+  selected: state.get('grid').selected,
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatch
+  dispatch,
 });
 
 const withConnect = connect(
