@@ -19,10 +19,42 @@ const View = styled.div`
 class Header extends React.Component {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
+    onHomeClick : PropTypes.func.isRequired,
   };
+
+  helpMenuItems = [
+    {
+      icon : 'help',
+      items : [
+        { text : 'Как работать с дебиторами'},
+        { text : 'Как работать с ЛС'},
+      ],
+    },
+  ];
+
+  userMenuItems = [
+    {
+      icon : 'user',
+      items : [
+        { text : 'Профиль'},
+        { text : 'Выйти'},
+      ],
+    },
+  ];
 
   constructor(props) {
     super(props);
+    this.bookmarkMenuItems = [
+      {
+        icon : 'bookmark',
+        items : [
+          { text : 'Раздел дебиторы'},
+          { text : 'Раздел ЛС'},
+        ],
+      },
+
+    ];
+
     this.toolbarItems = [
       {
         widget: 'dxButton',
@@ -40,7 +72,7 @@ class Header extends React.Component {
           activeStateEnabled : false,
           focusStateEnabled : false,
           hoverStateEnabled : false,
-          onClick: props.onClick,
+          onClick: props.onHomeClick,
           stylingMode : 'text',
         },
       },
@@ -48,12 +80,11 @@ class Header extends React.Component {
         cssClass : "textAsBtn",
         location: 'before',
         text: "IFLOW APP",
-        onClick : props.onClick,
+        onClick: props.onHomeClick,
       },
       {
         location: 'center',
         text: "ЧЭСК КОНФИГУРАЦИЯ ФЛ",
-        onClick : props.onClick,
       },
       {
         location : 'after',
@@ -66,7 +97,21 @@ class Header extends React.Component {
         location : 'after',
         widget : 'dxMenu',
         options: {
-          icon: 'bookmark',
+          items : this.bookmarkMenuItems,
+        },
+      },
+      {
+        location : 'after',
+        widget : 'dxMenu',
+        options: {
+          items : this.helpMenuItems,
+        },
+      },
+      {
+        location : 'after',
+        widget : 'dxMenu',
+        options: {
+          items : this.userMenuItems,
         },
       },
     ];

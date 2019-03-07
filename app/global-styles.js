@@ -39,7 +39,6 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     display: inline-block;
 }
-
 `;
 
 export default GlobalStyle;
