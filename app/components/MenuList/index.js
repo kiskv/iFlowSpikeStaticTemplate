@@ -27,17 +27,8 @@ const List = styled.div`
   margin-right: 0px;
 `;
 
-const MobileContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
 const MobileList = styled.div`
-  display: flex;
-  flex: 1;
-  width: 290px;
   height: 100%;
-  flex-direction: column;
   background-color: white;
   padding: 10px;
 `;
@@ -107,11 +98,9 @@ class MenuList extends React.Component {
       );
     }
     return (
-      <MobileContainer>
-        <MobileList>
-          {this.renderLinks(this.props.navigation)}
-        </MobileList>
-      </MobileContainer>
+      <MobileList>
+        {this.renderLinks(this.props.navigation)}
+      </MobileList>
     );
   }
 }

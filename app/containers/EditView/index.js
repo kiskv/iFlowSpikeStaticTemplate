@@ -23,7 +23,6 @@ import saga from './saga';
 
 const Container = styled.div`
   margin: 10px;
-  height: calc(100vh - 195px);
 `;
 
 /* eslint-disable react/prefer-stateless-function */

@@ -33,6 +33,7 @@ class Menu extends React.Component {
     window.onresize = this.onWindowResize;
   }
 
+  // TODO drawerMode переименовать в DeviceType 
   onWindowResize = () => {
     const drawerMode = getDrawerMode(
       this.state.drawerMode,
@@ -70,18 +71,22 @@ class Menu extends React.Component {
       <Drawer
         opened={this.props.opened}
         position="left"
-        openedStateMode={this.state.drawerMode}
+        openedStateMode="shrink"
         component={this.getComponent}
-      >
-        {this.props.children}
-      </Drawer>
+        style={{
+          flex: 0, 
+          position: this.state.drawerMode === 'shrink' ? 'relative' : 'absolute', 
+          width: 'auto', 
+          height: this.state.drawerMode === 'shrink' ? 'auto' : 'calc(100% - 57px)',
+          zIndex: 1000,
+        }}
+      />
     );
   }
 }
 
 Menu.propTypes = {
   opened: PropTypes.bool.isRequired,
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.any]).isRequired,
   setOpenedType: PropTypes.func.isRequired,
   navigation: PropTypes.arrayOf(PropTypes.any).isRequired,
   getNavigation: PropTypes.func.isRequired,

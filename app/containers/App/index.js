@@ -37,7 +37,7 @@ const Container = styled.div`
 const Content = styled.div`
   display: flex;
   flex: 1;
-  flex-direction: column;
+  flex-direction: row;
 `;
 
 const Routes = styled.div`
@@ -49,22 +49,21 @@ const Routes = styled.div`
 
 export default () => (
   <Container>
+    <Form />
+    <Header />
     <Content>
-      <Form />
-      <Header />
-      <Menu>
+      <Menu />
+      <Routes>
         <ControlPanel />
-        <Routes>
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/grid/:gridType" component={GridView} />
-            <Route path="/edit/:gridType" component={EditView} />
-            <Route component={NotFoundPage} />
-          </Switch>
-        </Routes>
-      </Menu>
-      <Footer />
-      <GlobalStyle />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/grid/:gridType" component={GridView} />
+          <Route path="/edit/:gridType" component={EditView} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </Routes>
     </Content>
+    <Footer />
+    <GlobalStyle />
   </Container>
 )
