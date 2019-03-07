@@ -43,7 +43,7 @@ class ControlPanel extends React.Component {
         locateInMenu: 'auto',
         options: {
           icon: 'edit',
-          onClick: this.addNewRow,
+          onClick: this.editRow,
         },
       },
       {
@@ -75,6 +75,16 @@ class ControlPanel extends React.Component {
     this.props.history.push(`/edit/new`);
   }
 
+  editRow = () => {
+    if(this.props.selected.length > 1) {
+      notify('Не более одного.');
+    } else if (this.props.selected.length === 0) {
+      notify('Выберите строку.')
+    } else {
+      this.props.history.push(`/edit/${this.props.viewId}`);
+    }
+  }
+
   render() {
     return (
       <View>
@@ -89,6 +99,7 @@ ControlPanel.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   selected: PropTypes.arrayOf(PropTypes.any).isRequired,
+  viewId: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
