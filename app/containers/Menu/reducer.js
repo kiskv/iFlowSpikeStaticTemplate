@@ -1,7 +1,8 @@
-import { GET_NAVIGATION_LIST, GET_NAVIGATION_LIST_ERROR, REQUEST_NAVIGATION_LIST, SET_LOADING, SET_CURRENT_VIEW_ID } from './constants';
+import { GET_NAVIGATION_LIST, GET_NAVIGATION_LIST_ERROR, REQUEST_NAVIGATION_LIST, SET_LOADING, SET_CURRENT_VIEW_ID, SET_DEFAULT_PAGE } from './constants';
 
 export const initialState = {
   navigation: [],
+  defaultPage: null,
 };
 
 function menuReducer(state = initialState, action) {
@@ -28,6 +29,12 @@ function menuReducer(state = initialState, action) {
       return {
         ...state,
         viewId: action.viewId,
+      }
+    }
+    case SET_DEFAULT_PAGE: {
+      return {
+        ...state,
+        defaultPage: action.defaultPage,
       }
     }
     default:
