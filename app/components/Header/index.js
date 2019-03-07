@@ -21,8 +21,39 @@ class Header extends React.Component {
     onClick: PropTypes.func.isRequired,
   };
 
+  helpMenuItems = [
+    {
+      icon : 'help',
+      items : [
+        { text : 'Как работать с дебиторами'},
+        { text : 'Как работать с ЛС'},
+      ],
+    },
+  ];
+
+  userMenuItems = [
+    {
+      icon : 'user',
+      items : [
+        { text : 'Профиль'},
+        { text : 'Выйти'},
+      ],
+    },
+  ];
+
   constructor(props) {
     super(props);
+    this.bookmarkMenuItems = [
+      {
+        icon : 'bookmark',
+        items : [
+          { text : 'Раздел дебиторы'},
+          { text : 'Раздел ЛС'},
+        ],
+      },
+
+    ];
+
     this.toolbarItems = [
       {
         widget: 'dxButton',
@@ -66,7 +97,21 @@ class Header extends React.Component {
         location : 'after',
         widget : 'dxMenu',
         options: {
-          icon: 'bookmark',
+          items : this.bookmarkMenuItems,
+        },
+      },
+      {
+        location : 'after',
+        widget : 'dxMenu',
+        options: {
+          items : this.helpMenuItems,
+        },
+      },
+      {
+        location : 'after',
+        widget : 'dxMenu',
+        options: {
+          items : this.userMenuItems,
         },
       },
     ];
