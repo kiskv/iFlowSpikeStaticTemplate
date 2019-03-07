@@ -11,16 +11,17 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
-import HomePage from 'containers/HomePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import Footer from '../../components/Footer';
+import Form from '../Form';
+import ControlPanel from '../ControlPanel';
+import EditView from '../EditView/Loadable';
+import HomePage from '../HomePage/Loadable';
 
-import GridView from 'containers/GridView/Loadable';
-import Menu from 'containers/Menu/Loadable';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
-import Form from 'containers/Form';
-import ControlPanel from 'containers/ControlPanel';
-import EditView from 'containers/EditView/Loadable';
+import NotFoundPage from '../NotFoundPage/Loadable';
+
+import GridView from '../GridView/Loadable';
+import Menu from '../Menu/Loadable';
+import Header from '../../components/Header';
 
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
@@ -51,6 +52,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       opened: false,
+      formVisible: false,
     };
   }
 
@@ -74,8 +76,8 @@ export default class App extends React.Component {
     return (
       <Container>
         <Content>
-          <Form />
-          <Header onClick={this.onMenuClick} />
+          <Form onClose={this.setFormVisible} visible={this.state.formVisible}/>
+          <Header onClick={this.onMenuClick}/>
           <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
             <ControlPanel />
             <Routes>
