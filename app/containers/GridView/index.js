@@ -22,6 +22,7 @@ import DataGrid, {
 import ruLocale from 'devextreme/localization/messages/ru.json';
 import { loadMessages, locale } from 'devextreme/localization';
 import 'devextreme-intl';
+import DataSource from 'utils/modules/Store';
 
 import { setSelectedItems } from './actions';
 import { setCurrentViewId } from '../Menu/actions';
@@ -38,6 +39,7 @@ const Container = styled.div`
 export class GridView extends React.Component {
   constructor(props) {
     super(props);
+    this.dataSource = DataSource;
     this.state = {
       columnAutoWidth: false,
     };
@@ -54,6 +56,7 @@ export class GridView extends React.Component {
   }
 
   render() {
+    const select = 'LINK,N_Code,C_Name1,C_Name2,C_Name3,C_Address1,N_Debit1_WO_Peni,N_Debit1_Peni,N_Debit1,N_DebtPeriods1,N_OverDuePeriods1,D_Date_Due,D_Date_LastDue';
     return (
       <Container>
         <DataGrid
@@ -62,12 +65,7 @@ export class GridView extends React.Component {
           elementAttr={{
             id: 'gridContainer',
           }}
-          dataSource={[
-            {a: 1, b: 2, c: 3, d: 4}, 
-            {a: 5, b: 6, c: 7, d: 8}, 
-            {a: 9, b: 10, c: 11, d: 12}, 
-            {a: 13, b: 14, c: 15, d: 16},
-          ]}
+          dataSource={this.dataSource({ viewId: this.props.match.params.gridType, action: 'pe_rd_debtors', select })}
           showBorders
           allowColumnReordering
           allowColumnResizing
@@ -77,7 +75,7 @@ export class GridView extends React.Component {
             mode="multiple"
             showCheckBoxesMode="onClick"
             selectAllMode="allPages" />
-          <Scrolling rowRenderingMode="virtual" />
+          <Scrolling rowRenderingMode="virtual" mode="virtual" />
           <ColumnChooser enabled />
           <Paging pageSize={25} />
           <HeaderFilter visible allowSearch />

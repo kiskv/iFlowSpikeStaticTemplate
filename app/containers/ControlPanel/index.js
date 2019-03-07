@@ -72,7 +72,12 @@ class ControlPanel extends React.Component {
   }
 
   addNewRow = () => {
-    this.props.history.push(`/edit/new`);
+    this.props.history.push({
+      pathname: `/edit/${this.props.viewId}`,
+      state: {
+        newrow: true,
+      },
+    });
   }
 
   editRow = () => {
