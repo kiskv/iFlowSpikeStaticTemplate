@@ -15,10 +15,12 @@ import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GridView from 'containers/GridView/Loadable';
-import NavigationHistory from 'components/NavigationHistory/';
-import Menu from 'components/Menu';
+import Menu from 'containers/Menu/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import Form from 'containers/Form';
+import ControlPanel from 'containers/ControlPanel';
+import EditView from 'containers/EditView/Loadable';
 
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
@@ -50,6 +52,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       opened: false,
+      formVisible: false,
     };
   }
 
@@ -69,17 +72,24 @@ export default class App extends React.Component {
     });
   };
 
+  setFormVisible = () => {
+    const { formVisible } = this.state;
+    this.setState({formVisible: !formVisible})
+  }
+
   render() {
     return (
       <Container>
         <Content>
+          <Form onClose={this.setFormVisible} visible={this.state.formVisible}/>
           <Header onClick={this.onMenuClick} />
           <Menu opened={this.state.opened} onModeChange={this.onModeChange}>
-            <NavigationHistory />
+            <ControlPanel />
             <Routes>
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route path="/grid/:gridType" component={GridView} />
+                <Route path="/edit/:gridType" component={EditView} />
                 <Route component={NotFoundPage} />
               </Switch>
             </Routes>

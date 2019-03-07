@@ -1,0 +1,10 @@
+/*
+ *
+ * Menu constants
+ *
+ */
+
+export const REQUEST_NAVIGATION_LIST = 'REQUEST_NAVIGATION_LIST';
+export const GET_NAVIGATION_LIST = 'GET_NAVIGATION_LIST';
+export const GET_NAVIGATION_LIST_ERROR = 'GET_NAVIGATION_LIST_ERROR';
+export const SET_LOADING = 'SET_LOADING'; 

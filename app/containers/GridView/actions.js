@@ -4,10 +4,9 @@
  *
  */
 
-import { DEFAULT_ACTION } from './constants';
+import { SELECTED_ITEMS_OF_GRID } from './constants';
 
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
-}
+export const setSelectedItems = (selected) => ({
+  type: SELECTED_ITEMS_OF_GRID,
+  selected
+})

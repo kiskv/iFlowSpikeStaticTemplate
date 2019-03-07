@@ -4,4 +4,4 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/GridView/DEFAULT_ACTION';
+export const SELECTED_ITEMS_OF_GRID = 'app/GridView/SELECTED_ITEMS_OF_GRID';
