@@ -40,10 +40,10 @@ class Menu extends React.Component {
     );
     if (drawerMode) {
       if (drawerMode === 'overlap') {
-        this.props.setOpenedType(false)
-          .then(() => {
-            this.setState({ drawerMode });
-          })
+        this.props.setOpenedType(false);
+        setTimeout(() => {
+          this.setState({ drawerMode });
+        }, 500)
       } else {
         this.setState({ drawerMode });
       }
