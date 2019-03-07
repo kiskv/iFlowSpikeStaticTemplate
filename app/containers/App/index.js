@@ -8,10 +8,8 @@
  */
 
 import React from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import Footer from '../../components/Footer';
 import Form from '../Form';
@@ -49,54 +47,24 @@ const Routes = styled.div`
   margin: 10px;
 `;
 
-class App extends React.Component {
-  moveToDefaultPage = () => {
-    this.props.history.push(`/grid/${this.props.defaultPage}`);
-  } 
-
-  render() {
-    return (
-      <Container>
-        <Content>
-          <Form />
-          <Header onHomeClick={this.moveToDefaultPage} />
-          <Menu>
-            <ControlPanel />
-            <Routes>
-              <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Route path="/grid/:gridType" component={GridView} />
-                <Route path="/edit/:gridType" component={EditView} />
-                <Route component={NotFoundPage} />
-              </Switch>
-            </Routes>
-          </Menu>
-          <Footer />
-          <GlobalStyle />
-        </Content>
-      </Container>
-    );
-  }
-}
-
-App.propTypes = {
-  defaultPage: PropTypes.string,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-}
-
-App.defaultProps = {
-  defaultPage: '',
-}
-
-const mapStateToProps = (state) => ({
-  defaultPage: state.get('menu').defaultPage,
-});
-
-const mapDispatchToProps = () => ({});
-
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(App));
+export default () => (
+  <Container>
+    <Content>
+      <Form />
+      <Header />
+      <Menu>
+        <ControlPanel />
+        <Routes>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/grid/:gridType" component={GridView} />
+            <Route path="/edit/:gridType" component={EditView} />
+            <Route component={NotFoundPage} />
+          </Switch>
+        </Routes>
+      </Menu>
+      <Footer />
+      <GlobalStyle />
+    </Content>
+  </Container>
+)

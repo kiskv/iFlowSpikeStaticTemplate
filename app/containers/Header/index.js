@@ -7,14 +7,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import { Toolbar } from 'devextreme-react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 
-import injectReducer from 'utils/injectReducer';
-import makeSelectHeader from './selectors';
-import reducer from './reducer';
 import { setOpenedType } from '../Menu/actions';
 
 const View = styled.div`
@@ -75,7 +71,7 @@ class Header extends React.Component {
           activeStateEnabled : false,
           focusStateEnabled : false,
           hoverStateEnabled : false,
-          onClick: props.onHomeClick,
+          onClick: this.moveToDefaultPage,
           stylingMode : 'text',
         },
       },
@@ -83,7 +79,7 @@ class Header extends React.Component {
         cssClass : "textAsBtn",
         location: 'before',
         text: "IFLOW APP",
-        onClick: props.onHomeClick,
+        onClick: this.moveToDefaultPage,
       },
       {
         location: 'center',
@@ -124,6 +120,10 @@ class Header extends React.Component {
     this.props.setOpenedType(!this.props.opened)
   }
 
+  moveToDefaultPage = () => {
+    this.props.history.push(`/grid/${this.props.defaultPage}`);
+  } 
+
   render() {
     return (
       <View>
@@ -134,20 +134,28 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  onHomeClick: PropTypes.func.isRequired,
   setOpenedType: PropTypes.func.isRequired,
   opened: PropTypes.bool.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  defaultPage: PropTypes.string,
 };
+
+Header.defaultProps = {
+  defaultPage: '',
+}
 
 const mapStateToProps = state => ({
   opened: state.get('menu').opened,
+  defaultPage: state.get('menu').defaultPage,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   setOpenedType: visible => dispatch(setOpenedType(visible)),
 })
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Header);
+)(Header));
