@@ -4,27 +4,28 @@
  *
  */
 
-import { GET_NAVIGATION_LIST, REQUEST_NAVIGATION_LIST, GET_NAVIGATION_LIST_ERROR, SET_LOADING } from './constants';
+import { GET_NAVIGATION_LIST, REQUEST_NAVIGATION_LIST, GET_NAVIGATION_LIST_ERROR, SET_LOADING, SET_CURRENT_VIEW_ID } from './constants';
 
 export const reqNavigationList = () => ({
-  type: REQUEST_NAVIGATION_LIST
+  type: REQUEST_NAVIGATION_LIST,
 });
 
-export const navError = error => {
-  return {
-    type: GET_NAVIGATION_LIST_ERROR,
-    error
-  }
-};
+export const navError = error => ({
+  type: GET_NAVIGATION_LIST_ERROR,
+  error,
+});
 
-export const getNavigation = (navigation) => {
-  return {
-    type: GET_NAVIGATION_LIST,
-    navigation
-  }
-};
+export const getNavigation = (navigation) => ({
+  type: GET_NAVIGATION_LIST,
+  navigation,
+});
 
 export const setLoading = (loading) => ({
   type: SET_LOADING,
-  loading
+  loading,
 });
+
+export const setCurrentViewId = (viewId) => ({
+  type: SET_CURRENT_VIEW_ID,
+  viewId,
+})

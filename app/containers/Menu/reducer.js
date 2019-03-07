@@ -1,7 +1,7 @@
-import { GET_NAVIGATION_LIST, GET_NAVIGATION_LIST_ERROR, REQUEST_NAVIGATION_LIST, SET_LOADING } from './constants';
+import { GET_NAVIGATION_LIST, GET_NAVIGATION_LIST_ERROR, REQUEST_NAVIGATION_LIST, SET_LOADING, SET_CURRENT_VIEW_ID } from './constants';
 
 export const initialState = {
-  navigation: []
+  navigation: [],
 };
 
 function menuReducer(state = initialState, action) {
@@ -11,17 +11,23 @@ function menuReducer(state = initialState, action) {
     case GET_NAVIGATION_LIST:
       return {
         ...state,
-        navigation: action.navigation
+        navigation: action.navigation,
       };
     case GET_NAVIGATION_LIST_ERROR:
       return {
         ...state,
-        error: action.error
+        error: action.error,
       }
     case SET_LOADING: {
       return {
         ...state,
-        loading: action.loading 
+        loading: action.loading, 
+      }
+    }
+    case SET_CURRENT_VIEW_ID: {
+      return {
+        ...state,
+        viewId: action.viewId,
       }
     }
     default:

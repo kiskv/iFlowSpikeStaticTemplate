@@ -67,6 +67,7 @@ class MenuList extends React.Component {
         openedTree: index,
       })
     } else {
+      this.props.onClick(viewType);
       this.setState({
         openedLink: viewType,
       })
@@ -118,6 +119,7 @@ class MenuList extends React.Component {
 MenuList.propTypes = {
   navigation: PropTypes.arrayOf(PropTypes.object).isRequired,
   type: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default MenuList;

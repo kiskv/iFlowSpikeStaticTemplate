@@ -93,6 +93,7 @@ ControlPanel.propTypes = {
 
 const mapStateToProps = state => ({
   selected: state.get('grid').selected,
+  viewId: state.get('menu').viewId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
