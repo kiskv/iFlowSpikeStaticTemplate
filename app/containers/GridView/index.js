@@ -23,6 +23,7 @@ import ruLocale from 'devextreme/localization/messages/ru.json';
 import { loadMessages, locale } from 'devextreme/localization';
 import 'devextreme-intl';
 import DataSource from 'utils/modules/Store';
+import { setToolbarItems } from 'containers/ControlPanel/actions';
 
 import { setSelectedItems } from './actions';
 import { setCurrentViewId } from '../Menu/actions';
@@ -48,6 +49,7 @@ export class GridView extends React.Component {
   }
   
   componentDidMount() {
+    this.props.setToolbarItems('grid');
     this.props.setCurrentViewId(this.props.match.params.gridType);
   }
 
@@ -99,6 +101,7 @@ GridView.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.objectOf(PropTypes.any),
   }).isRequired,
+  setToolbarItems: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = () => ({});
@@ -106,6 +109,7 @@ const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch) => ({
   setSelectedItems: selected => dispatch(setSelectedItems(selected)),
   setCurrentViewId: viewId => dispatch(setCurrentViewId(viewId)),
+  setToolbarItems: path => dispatch(setToolbarItems(path)),
 });
 
 export default connect(

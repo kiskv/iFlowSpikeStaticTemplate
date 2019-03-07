@@ -4,4 +4,4 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/ControlPanel/DEFAULT_ACTION';
+export const SET_TOOLBAR_ITEMS = 'app/ControlPanel/SET_TOOLBAR_ITEMS';

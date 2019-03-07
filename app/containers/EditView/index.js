@@ -17,6 +17,7 @@ import injectReducer from 'utils/injectReducer';
 import Proxy from 'utils/modules/DirectProxy';
 import { ruColumns } from 'utils/modules/Store';
 import { setVisibleForm } from 'containers/Form/actions';
+import { setToolbarItems } from 'containers/ControlPanel/actions';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -37,6 +38,7 @@ export class EditView extends React.Component {
   }
 
   componentDidMount(){
+    this.props.setToolbarItems('edit');
     if(this.props.selected.length === 0) {
       if(!this.props.location.state){ 
         this.props.history.push(`/grid/${this.props.match.params.gridType}`)
@@ -133,10 +135,6 @@ export class EditView extends React.Component {
     }
   }
 
-  onClick = () => {
-    this.props.setVisibleForm(true);
-  }
-
   render() {
     return (
       <Container>
@@ -145,7 +143,6 @@ export class EditView extends React.Component {
           <meta name="description" content="Description of EditView" />
         </Helmet>
         <h3>{this.props.location.state ? 'Добавление новой строки' : `Редактирование по LINK: ${this.props.selected.length > 1 ? this.props.selected[0].LINK : ''}`}</h3>
-        <button type="button" onClick={this.onClick}><h3>Open drawer Form</h3></button>
         <Form formData={this.state.data} items={this.state.formItems} scrollingEnabled />
       </Container>
     );
@@ -162,6 +159,7 @@ EditView.propTypes = {
   }).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   setVisibleForm: PropTypes.func.isRequired,
+  setToolbarItems: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -170,6 +168,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setVisibleForm: visible => dispatch(setVisibleForm(visible)),
+  setToolbarItems: path => dispatch(setToolbarItems(path)),
 })
 
 const withConnect = connect(
