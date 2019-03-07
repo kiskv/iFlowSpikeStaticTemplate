@@ -7,14 +7,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Drawer } from 'devextreme-react';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import MenuList from 'components/MenuList/index';
-import makeSelectMenu from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { getNavigation } from './actions';
@@ -87,16 +85,16 @@ Menu.propTypes = {
   onModeChange: PropTypes.func.isRequired,
   navigation: PropTypes.arrayOf(PropTypes.any).isRequired,
   getNavigation: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   navigation: state.get('menu').navigation,
-  loading: state.get('menu').loading
+  loading: state.get('menu').loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getNavigation: () => dispatch(getNavigation())
+  getNavigation: () => dispatch(getNavigation()),
 });
 
 const withConnect = connect(
