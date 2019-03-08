@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #gridContainer {
-    height: calc(100vh - 195px);
+    height: calc(100vh - 209px);
   }
   
   .textAsBtn {

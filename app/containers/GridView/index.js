@@ -47,6 +47,13 @@ export class GridView extends React.Component {
     locale('ru');
     loadMessages(ruLocale);
   }
+
+  shouldComponentUpdate(nextProps) {
+    if(this.props.match.params.gridType !== nextProps.match.params.gridType) {
+      return true;
+    }
+    return false
+  }
   
   componentDidMount() {
     this.props.setToolbarItems('grid');

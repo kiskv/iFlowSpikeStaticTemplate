@@ -1,8 +1,9 @@
-import { GET_NAVIGATION_LIST, GET_NAVIGATION_LIST_ERROR, REQUEST_NAVIGATION_LIST, SET_LOADING, SET_CURRENT_VIEW_ID, SET_DEFAULT_PAGE } from './constants';
+import { GET_NAVIGATION_LIST, GET_NAVIGATION_LIST_ERROR, REQUEST_NAVIGATION_LIST, SET_LOADING, SET_CURRENT_VIEW_ID, SET_DEFAULT_PAGE, SET_OPENED_TYPE_MENU } from './constants';
 
 export const initialState = {
   navigation: [],
   defaultPage: null,
+  opened: false,
 };
 
 function menuReducer(state = initialState, action) {
@@ -35,6 +36,12 @@ function menuReducer(state = initialState, action) {
       return {
         ...state,
         defaultPage: action.defaultPage,
+      }
+    }
+    case SET_OPENED_TYPE_MENU: {
+      return {
+        ...state,
+        opened: action.opened,
       }
     }
     default:

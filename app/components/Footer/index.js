@@ -12,6 +12,7 @@ import styled from 'styled-components';
 const View = styled.div`
   display: flex;
   align-items: flex-end;
+  z-index: 2000;
 `;
 
 /* eslint-disable react/prefer-stateless-function */
