@@ -14,7 +14,7 @@ function getDefaultPage(){
 function* getNavigation() {
   try {
     yield put({type: SET_LOADING, loading: true});
-    const result = yield call(doReq, 'http://vnext/iflow/robert/nav?_dc=1550754996520');
+    const result = yield call(doReq, 'http://dev-ws-v-05.compulink.local/iflow/robert/nav?_dc=1550754996520');
     if(result) {
       const navigation = result.children;
       const defaultPage = yield getDefaultPage();

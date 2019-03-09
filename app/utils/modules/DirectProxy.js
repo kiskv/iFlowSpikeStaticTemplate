@@ -22,10 +22,10 @@
 class DirectProxy {
     action = undefined;
 
-    RPC_URL = 'http://vnext/iflow/robert/rpc';
+    RPC_URL = 'http://dev-ws-v-05.compulink.local/iflow/robert/rpc';
 
     constructor(action) {
-        this.action = action;
+      this.action = action;
     }
 
     /**
@@ -35,9 +35,9 @@ class DirectProxy {
      * get({...})
      */
     get(options) {
-        return this.request(Object.assign({
-            method: 'Query'
-        }, options));
+      return this.request(Object.assign({
+        method: 'Query',
+      }, options));
     }
 
     /**
@@ -49,9 +49,9 @@ class DirectProxy {
      * })
      */
     add(options) {
-        return this.request(Object.assign({
-            method: 'Add'
-        }, options));
+      return this.request(Object.assign({
+        method: 'Add',
+      }, options));
     }
 
     /**
@@ -63,9 +63,9 @@ class DirectProxy {
      * })
      */
     update(options) {
-        return this.request(Object.assign({
-            method: 'Update'
-        }, options));
+      return this.request(Object.assign({
+        method: 'Update',
+      }, options));
     }
 
     /**
@@ -77,9 +77,9 @@ class DirectProxy {
      * })
      */
     remove(options) {
-        return this.request(Object.assign({
-            method: 'Delete'
-        }, options));
+      return this.request(Object.assign({
+        method: 'Delete',
+      }, options));
     }
 
     /**
@@ -88,20 +88,20 @@ class DirectProxy {
      * @returns {Promise}
      */
     request(options) {
-        const content = JSON.stringify(Object.assign({
-            action: this.action,
-            tid: 0,
-            type: 'rpc'
-        }, options || {}));
-        const response = fetch(this.RPC_URL, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: content
-        });
-        return response.then(res => res.json());
+      const content = JSON.stringify(Object.assign({
+        action: this.action,
+        tid: 0,
+        type: 'rpc',
+      }, options || {}));
+      const response = fetch(this.RPC_URL, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: content,
+      });
+      return response.then(res => res.json());
     }
 }
 
