@@ -18,12 +18,15 @@ import DataGrid, {
   FilterPanel,
   ColumnChooser,
   Selection,
+  Column,
+  RequiredRule,
+  PatternRule,
 } from 'devextreme-react/data-grid';
 import ruLocale from 'devextreme/localization/messages/ru.json';
 import { loadMessages, locale } from 'devextreme/localization';
 import 'devextreme-intl';
-import DataSource from 'utils/modules/Store';
 import { setToolbarItems } from 'containers/ControlPanel/actions';
+import DataSource, { ruColumns } from '../../utils/modules/Store';
 
 import { setSelectedItems } from './actions';
 import { setCurrentViewId } from '../Menu/actions';
@@ -67,6 +70,23 @@ export class GridView extends React.Component {
     this.props.setSelectedItems(data.selectedRowsData);
   }
 
+  rednerColumns = () => ruColumns.map((item, index) => {
+    if(item.name === 'Phone') {
+      return (
+        <Column key={index} dataField={item.name} caption={item.text} visible={item.hidden}>
+          <RequiredRule />
+          <PatternRule
+            message={'Your phone must have "(555) 555-5555" format!'}
+            pattern={/^\(\d{3}\) \d{3}-\d{4}$/i}
+          />
+        </Column>
+      )
+    }
+    return (
+      <Column key={index} dataField={item.name} caption={item.text} visible={item.hidden}/>
+    )
+  })
+
   render() {
     const select = 'LINK,N_Code,C_Name1,C_Name2,C_Name3,C_Address1,N_Debit1_WO_Peni,N_Debit1_Peni,N_Debit1,N_DebtPeriods1,N_OverDuePeriods1,D_Date_Due,D_Date_LastDue';
     return (
@@ -83,6 +103,7 @@ export class GridView extends React.Component {
           allowColumnResizing
           remoteOperations
           onSelectionChanged={this.onSelectionChanged}>
+          {this.rednerColumns()}
           <Selection 
             mode="multiple"
             showCheckBoxesMode="onClick"
