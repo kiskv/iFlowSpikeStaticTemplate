@@ -3,11 +3,11 @@
  * Form reducer
  *
  */
-
-import { fromJS } from 'immutable';
 import { SET_VISIBLE_FORM } from './constants';
 
-export const initialState = fromJS({});
+export const initialState = {
+  visible: false,
+};
 
 function formReducer(state = initialState, action) {
   switch (action.type) {

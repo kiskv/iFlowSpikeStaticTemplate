@@ -71,13 +71,14 @@ ControlPanel.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   selected: PropTypes.arrayOf(PropTypes.any).isRequired,
-  viewId: PropTypes.string.isRequired,
+  viewId: PropTypes.string,
   items: PropTypes.func,
   setVisibleForm: PropTypes.func.isRequired,
 };
 
 ControlPanel.defaultProps = {
   items: () => [],
+  viewId: null,
 }
 
 const mapStateToProps = state => ({
