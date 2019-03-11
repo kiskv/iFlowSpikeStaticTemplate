@@ -3,12 +3,11 @@
  * GridView reducer
  *
  */
-
-import { fromJS } from 'immutable';
-import { SELECTED_ITEMS_OF_GRID } from './constants';
+import { SELECTED_ITEMS_OF_GRID, SET_ALLOW_FILTERING_TYPE } from './constants';
 
 export const initialState = {
-  selected: []
+  selected: [],
+  allowFiltering: true,
 };
 
 function gridViewReducer(state = initialState, action) {
@@ -16,8 +15,13 @@ function gridViewReducer(state = initialState, action) {
     case SELECTED_ITEMS_OF_GRID:
       return {
         ...state,
-        selected: action.selected
+        selected: action.selected,
       };
+    case SET_ALLOW_FILTERING_TYPE: 
+      return {
+        ...state,
+        allowFiltering: action.allowFiltering,
+      }
     default:
       return state;
   }

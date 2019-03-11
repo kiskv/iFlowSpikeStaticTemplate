@@ -52,6 +52,9 @@ export class GridView extends React.Component {
     if(this.props.match.params.gridType !== nextProps.match.params.gridType) {
       return true;
     }
+    if(this.props.allowFiltering !== nextProps.allowFiltering){
+      return true;
+    }
     return false
   }
   
@@ -87,15 +90,15 @@ export class GridView extends React.Component {
           <Scrolling rowRenderingMode="virtual" mode="virtual" />
           <ColumnChooser enabled />
           <Paging pageSize={25} />
-          <HeaderFilter visible allowSearch />
-          <FilterRow visible />
+          <HeaderFilter visible={this.props.allowFiltering} allowSearch />
+          <FilterRow visible={this.props.allowFiltering} />
           <Editing
             mode="form"
-            allowAdding
-            allowUpdating
-            allowDeleting
+            allowAdding={this.props.allowFiltering}
+            allowUpdating={this.props.allowFiltering}
+            allowDeleting={this.props.allowFiltering}
             useIcons />
-          <FilterPanel visible />
+          <FilterPanel visible={this.props.allowFiltering} />
         </DataGrid>
       </Container>
     );
@@ -109,9 +112,12 @@ GridView.propTypes = {
     params: PropTypes.objectOf(PropTypes.any),
   }).isRequired,
   setToolbarItems: PropTypes.func.isRequired,
+  allowFiltering: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  allowFiltering: state.get('grid').allowFiltering,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   setSelectedItems: selected => dispatch(setSelectedItems(selected)),
