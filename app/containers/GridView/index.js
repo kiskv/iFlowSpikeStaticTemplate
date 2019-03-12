@@ -18,12 +18,15 @@ import DataGrid, {
   FilterPanel,
   ColumnChooser,
   Selection,
+  Column,
+  RequiredRule,
+  PatternRule,
 } from 'devextreme-react/data-grid';
 import ruLocale from 'devextreme/localization/messages/ru.json';
 import { loadMessages, locale } from 'devextreme/localization';
 import 'devextreme-intl';
-import DataSource from 'utils/modules/Store';
 import { setToolbarItems } from 'containers/ControlPanel/actions';
+import DataSource, { ruColumns } from '../../utils/modules/Store';
 
 import { setSelectedItems } from './actions';
 import { setCurrentViewId } from '../Menu/actions';
@@ -52,6 +55,9 @@ export class GridView extends React.Component {
     if(this.props.match.params.gridType !== nextProps.match.params.gridType) {
       return true;
     }
+    if(this.props.allowFiltering !== nextProps.allowFiltering){
+      return true;
+    }
     return false
   }
   
@@ -63,6 +69,23 @@ export class GridView extends React.Component {
   onSelectionChanged = (data) => {
     this.props.setSelectedItems(data.selectedRowsData);
   }
+
+  rednerColumns = () => ruColumns.map((item, index) => {
+    if(item.name === 'Phone') {
+      return (
+        <Column key={index} dataField={item.name} caption={item.text} visible={item.hidden}>
+          <RequiredRule />
+          <PatternRule
+            message={'Your phone must have "(555) 555-5555" format!'}
+            pattern={/^\(\d{3}\) \d{3}-\d{4}$/i}
+          />
+        </Column>
+      )
+    }
+    return (
+      <Column key={index} dataField={item.name} caption={item.text} visible={item.hidden}/>
+    )
+  })
 
   render() {
     const select = 'LINK,N_Code,C_Name1,C_Name2,C_Name3,C_Address1,N_Debit1_WO_Peni,N_Debit1_Peni,N_Debit1,N_DebtPeriods1,N_OverDuePeriods1,D_Date_Due,D_Date_LastDue';
@@ -80,6 +103,7 @@ export class GridView extends React.Component {
           allowColumnResizing
           remoteOperations
           onSelectionChanged={this.onSelectionChanged}>
+          {this.rednerColumns()}
           <Selection 
             mode="multiple"
             showCheckBoxesMode="onClick"
@@ -87,15 +111,15 @@ export class GridView extends React.Component {
           <Scrolling rowRenderingMode="virtual" mode="virtual" />
           <ColumnChooser enabled />
           <Paging pageSize={25} />
-          <HeaderFilter visible allowSearch />
-          <FilterRow visible />
+          <HeaderFilter visible={this.props.allowFiltering} allowSearch />
+          <FilterRow visible={this.props.allowFiltering} />
           <Editing
             mode="form"
-            allowAdding
-            allowUpdating
-            allowDeleting
+            allowAdding={this.props.allowFiltering}
+            allowUpdating={this.props.allowFiltering}
+            allowDeleting={this.props.allowFiltering}
             useIcons />
-          <FilterPanel visible />
+          <FilterPanel visible={this.props.allowFiltering} />
         </DataGrid>
       </Container>
     );
@@ -109,9 +133,12 @@ GridView.propTypes = {
     params: PropTypes.objectOf(PropTypes.any),
   }).isRequired,
   setToolbarItems: PropTypes.func.isRequired,
+  allowFiltering: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  allowFiltering: state.get('grid').allowFiltering,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   setSelectedItems: selected => dispatch(setSelectedItems(selected)),

@@ -19,6 +19,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
+import { setAllowFiltering } from '../GridView/actions';
 
 const View = styled.div`
   margin: 10px;
@@ -57,6 +58,10 @@ class ControlPanel extends React.Component {
     this.props.setVisibleForm(true);
   }
 
+  onAllowFilteringChange = (args) => {
+    this.props.setAllowFiltering(args.value === 1);
+  }
+
   render() {
     return (
       <View>
@@ -71,13 +76,16 @@ ControlPanel.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   selected: PropTypes.arrayOf(PropTypes.any).isRequired,
-  viewId: PropTypes.string.isRequired,
+  viewId: PropTypes.string,
   items: PropTypes.func,
   setVisibleForm: PropTypes.func.isRequired,
+  setAllowFiltering: PropTypes.func.isRequired,
 };
 
 ControlPanel.defaultProps = {
   items: () => [],
+  viewId: null,
+
 }
 
 const mapStateToProps = state => ({
@@ -88,6 +96,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setVisibleForm: visible => dispatch(setVisibleForm(visible)),
+  setAllowFiltering: allowFiltering => dispatch(setAllowFiltering(allowFiltering)),
 });
 
 const withConnect = connect(

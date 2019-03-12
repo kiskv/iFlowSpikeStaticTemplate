@@ -88,11 +88,15 @@ class Menu extends React.Component {
 Menu.propTypes = {
   opened: PropTypes.bool.isRequired,
   setOpenedType: PropTypes.func.isRequired,
-  navigation: PropTypes.arrayOf(PropTypes.any).isRequired,
+  navigation: PropTypes.arrayOf(PropTypes.any),
   getNavigation: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   setCurrentViewId: PropTypes.func.isRequired,
 };
+
+Menu.defaultProps = {
+  navigation: [],
+}
 
 const mapStateToProps = (state) => ({
   navigation: state.get('menu').navigation,
